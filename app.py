@@ -133,7 +133,7 @@ def deleta_vegetal():
 
     # Leitura dos parâmetros recebidos
     nome = request.json.get('nome')
-    print(nome)
+    
     try:
         db.session.query(Vegetal).filter(Vegetal.nome == nome).delete()
         db.session.commit()
@@ -198,8 +198,7 @@ def ativa_bomba():
     idVaso = request.json.get('idVaso')
     tempo = request.json.get('tempo')
     data = datetime.now().strftime("%d/%m/%Y %H:%M")
-    print(type(data))
-
+  
     try:
         db.session.query(Vaso).filter(Vaso.id == idVaso).update({"tempo": tempo, "bomba": "1", "ultimabomba": data})
         db.session.commit()
