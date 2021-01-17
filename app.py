@@ -13,10 +13,10 @@ ENV = 'nodev'
 
 if ENV == 'dev':
     app.debug = True
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:banco123@localhost/SIV'
+    app.config['SQLALCHEMY_DATABASE_URI'] = ''
 else: 
     app.debug = False
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://igsfelleuhvppy:7ec0d09856058bd7c4f1feac45bc7ca7cd71039680df1bda4cc85cc1c6d2f1f3@ec2-3-228-114-251.compute-1.amazonaws.com:5432/dcvp1leciv6608'
+    app.config['SQLALCHEMY_DATABASE_URI'] = ''
 
 app.config['SQL_TRACK_MODIFICATIONS'] = False
 
