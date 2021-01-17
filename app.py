@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from flask import Flask, request, make_response, jsonify
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
@@ -125,6 +127,21 @@ def altera_vegetal():
         return make_response(jsonify('Vegetal não atualizado!'), 406)
 
 
+# App mobile realiza para deletar vegetal cadastrado
+@app.route('/vegetal', methods=['DELETE'])
+def deleta_vegetal():
+
+    # Leitura dos parâmetros recebidos
+    nome = request.json.get('nome')
+    print(nome)
+    try:
+        db.session.query(Vegetal).filter(Vegetal.nome == nome).delete()
+        db.session.commit()
+        return make_response(jsonify('Vegetal excluído!'), 200)
+    except Exception as e:
+        return make_response(jsonify('Não foi possível excluir o vegetal!'), 406)
+
+
 # App mobile realiza para obter o estado dos vasos
 @app.route('/vaso', methods=['GET'])
 def obtem_vaso():
@@ -231,7 +248,7 @@ def liga_bomba():
 def vaso_ativo():
  
     # Consultando os dois objetos Vaso no banco
-    vasos = db.session.query(Vaso).all()
+    vasos = db.session.query(Vaso).order_by(Vaso.id.desc()).all()
     vaso1 = vasos[1]
     vaso2 = vasos[0]
 
@@ -266,7 +283,7 @@ def add_info():
             return make_response(jsonify('Objeto cadastrado!'), 200)
     else:
         return make_response(jsonify('O Vaso não está ativo!'), 406)
-    
+
 
 # Verifica se precisa acionar a bomba e adiciona na lista de bomba
 def verifica_medidas(idVaso, temperatura, umidade, nomeVegetal, data):
